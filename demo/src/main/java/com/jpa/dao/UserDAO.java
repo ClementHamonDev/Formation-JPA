@@ -12,14 +12,13 @@ import jakarta.persistence.Persistence;
 public class UserDAO {
 
     private EntityManagerFactory emf;
-    private EntityManager em;
 
     public UserDAO(){
         this.emf = Persistence.createEntityManagerFactory("demoPU");
-        this.em = emf.createEntityManager();
     }
 
     public void createUser(String name){
+        EntityManager em = emf.createEntityManager();
         EntityTransaction transaction = em.getTransaction();
 
         transaction.begin();
@@ -28,19 +27,27 @@ public class UserDAO {
         em.persist(user);
 
         transaction.commit();
+        em.close();
     }
 
     public User readUser(int id){   
+        EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, id);
+        em.close();
         return user;
     }
 
     public List<User> getAllUsers(){
+        EntityManager em = emf.createEntityManager();
+
         List<User> users = em.createQuery("SELECT u FROM User u", User.class).getResultList();
+        em.close();
         return users;
     }
 
     public void updateUser(int id, String newName){
+        EntityManager em = emf.createEntityManager();
+
         em.getTransaction().begin();
 
         User user = em.find(User.class, id);
@@ -50,9 +57,11 @@ public class UserDAO {
         }
 
         em.getTransaction().commit();
+        em.close();
     }
 
     public void deleteUser(int id){
+        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
         User user = em.find(User.class, id);
@@ -62,6 +71,7 @@ public class UserDAO {
         }
 
         em.getTransaction().commit();
+        em.close();
     }
 
     
