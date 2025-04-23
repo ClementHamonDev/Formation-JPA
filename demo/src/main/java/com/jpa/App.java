@@ -1,24 +1,14 @@
 package com.jpa;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import com.jpa.dao.UserDAO;
-import com.jpa.entity.User;
-import com.jpa.entity.TP02.Client;
-import com.jpa.entity.TP02.Emprunt;
-import com.jpa.entity.TP02.Livre;
-import com.jpa.tpHeritage.exo1.Client2;
-import com.jpa.tpHeritage.exo1.Employe;
-import com.jpa.tpHeritage.exo2.ProduitNumerique;
-import com.jpa.tpHeritage.exo2.ProduitPhysique;
-import com.jpa.tpHeritage.exo3.Article;
-import com.jpa.tpHeritage.exo3.Commentaire;
-import com.jpa.tpHeritage.exo4.Bus;
-import com.jpa.tpHeritage.exo4.Trajet;
+import com.jpa.tp06.Acteur;
+import com.jpa.tp06.Film;
+import com.jpa.tp06.Genre;
+import com.jpa.tp06.Pays;
+import com.jpa.tp06.Realisateur;
+import com.jpa.tp06.Role;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -53,53 +43,101 @@ public class App {
         tx.begin();
 
         try {
-            Employe emp = new Employe();
-            emp.setNom("Hamon");
-            emp.setPrenom("Clément");
-            emp.setSalaire(10000);
-            emp.setPoste("Formateur");
+            // Acteur a1 = new Acteur("Jean Dujardin"); em.persist(a1);
+            // Acteur a2 = new Acteur("Marion Cotillard"); em.persist(a2);
+            // Acteur a3 = new Acteur("Vincent Cassel"); em.persist(a3);
+            // Acteur a4 = new Acteur("Léa Seydoux"); em.persist(a4);
+            // Acteur a5 = new Acteur("Omar Sy"); em.persist(a5);
 
-            Client2 c = new Client2();
-            c.setNom("Jean");
-            c.setPrenom("Paul");
-            c.setEmail("jean.paul@email.fr");
+            // // Création de pays
+            // Pays p1 = new Pays("France"); em.persist(p1);
+            // Pays p2 = new Pays("États-Unis"); em.persist(p2);
+            // Pays p3 = new Pays("Royaume-Uni"); em.persist(p3);
 
-            em.persist(c);
-            em.persist(emp);
+            // // Création de genres
+            // Genre g1 = new Genre("Comédie"); em.persist(g1);
+            // Genre g2 = new Genre("Drame"); em.persist(g2);
+            // Genre g3 = new Genre("Action"); em.persist(g3);
+            // Genre g4 = new Genre("Science-fiction"); em.persist(g4);
 
-            ProduitPhysique pp = new ProduitPhysique();
-            pp.setNom("Ballon");
-            pp.setPoids(1);
-            pp.setPrix(20);
+            // // Création de réalisateurs
+            // Realisateur r1 = new Realisateur("Luc Besson"); em.persist(r1);
+            // Realisateur r2 = new Realisateur("Christopher Nolan"); em.persist(r2);
+            // Realisateur r3 = new Realisateur("Jean-Pierre Jeunet"); em.persist(r3);
 
-            ProduitNumerique pn = new ProduitNumerique();
-            pn.setNom("Dark Souls");
-            pn.setPrix(10);
-            pn.setTailleFichier(10);
+            // // Création de films
+            // Film f1 = new Film("OSS 117", 100, 2006);
+            // f1.getGenres().add(g1); f1.getRealisateurs().add(r1); f1.getPays().add(p1);
+            // em.persist(f1);
 
-            em.persist(pn);
-            em.persist(pp);
+            // Film f2 = new Film("Inception", 148, 2010);
+            // f2.getGenres().add(g2); f2.getGenres().add(g4);
+            // f2.getRealisateurs().add(r2); f2.getPays().add(p2);
+            // em.persist(f2);
 
-            Article a = new Article();
-            a.setTitre("Mon article");
+            // Film f3 = new Film("La Haine", 95, 1995);
+            // f3.getGenres().add(g2); f3.getRealisateurs().add(r3); f3.getPays().add(p1);
+            // em.persist(f3);
 
-            Commentaire com = new Commentaire();
-            com.setContenu("contenuuuuuuuuuuuuuuuuu");
+            // Film f4 = new Film("Intouchables", 112, 2011);
+            // f4.getGenres().add(g1); f4.getGenres().add(g2);
+            // f4.getRealisateurs().add(r1); f4.getPays().add(p1);
+            // em.persist(f4);
 
-            em.persist(com);
-            em.persist(a);
+            // Film f5 = new Film("Skyfall", 143, 2012);
+            // f5.getGenres().add(g3); f5.getRealisateurs().add(r2); f5.getPays().add(p3);
+            // em.persist(f5);
 
+            // // Création de rôles
+            // em.persist(new Role("Hubert Bonisseur", a1, f1));
+            // em.persist(new Role("Mal", a2, f2));
+            // em.persist(new Role("Vinz", a3, f3));
+            // em.persist(new Role("Driss", a5, f4));
+            // em.persist(new Role("Lucia", a4, f4));
+            // em.persist(new Role("Agent M", a1, f5));
+            // em.persist(new Role("Infiltrée", a4, f5));
+            // em.persist(new Role("Rêveuse", a2, f2));
+            // em.persist(new Role("Observateur", a3, f1));
+            // em.persist(new Role("Inconnu", a5, f3));
 
-            Bus b = new Bus();
-            b.setCapacite(300);
-            b.setImmatriculation("11 AAA 11");
-            em.persist(b);
+            // Tous les films dans lesquels un acteur donné a joué
+            List<Film> filmsActeur = em.createQuery(
+                    "SELECT DISTINCT r.film FROM Role r WHERE r.acteur.nom = :nom", Film.class)
+                    .setParameter("nom", "Jean Dujardin")
+                    .getResultList();
 
-            Trajet trajet = new Trajet();
-            trajet.setDepart("Republique");
-            trajet.setArrivee("Clemenceau");
-            trajet.setVehicule(b);
-            em.persist(trajet);
+            // Tous les acteurs ayant joué dans un film d’un genre donné
+            List<Acteur> acteursGenre = em.createQuery(
+                    "SELECT DISTINCT r.acteur FROM Role r JOIN r.film f JOIN f.genres g WHERE g.nom = :genre",
+                    Acteur.class)
+                    .setParameter("genre", "Drame")
+                    .getResultList();
+
+            // Tous les genres associés à des films où un acteur donné a joué
+            List<Genre> genresActeur = em.createQuery(
+                    "SELECT DISTINCT g FROM Role r JOIN r.film f JOIN f.genres g WHERE r.acteur.nom = :nom",
+                    Genre.class)
+                    .setParameter("nom", "Omar Sy")
+                    .getResultList();
+
+            // Tous les pays dans lesquels ont été diffusés les films d’un genre donné
+            List<Pays> paysGenre = em.createQuery(
+                    "SELECT DISTINCT p FROM Film f JOIN f.genres g JOIN f.pays p WHERE g.nom = :genre", Pays.class)
+                    .setParameter("genre", "Action")
+                    .getResultList();
+
+            // Nombre de films par genre
+            List<Long[]> nbFilmsGenre = em.createQuery(
+                    "SELECT g.nom, COUNT(f) FROM Film f JOIN f.genres g GROUP BY g.nom", Long[].class)
+                    .getResultList();
+
+            // Tous les réalisateurs ayant travaillé avec un acteur donné
+            List<Realisateur> realisateursActeur = em.createQuery(
+                    "SELECT DISTINCT real FROM Role ro JOIN ro.film f JOIN f.realisateurs real WHERE ro.acteur.nom = :nom",
+                    Realisateur.class)
+                    .setParameter("nom", "Léa Seydoux")
+                    .getResultList();
+
 
             tx.commit();
 
@@ -111,6 +149,53 @@ public class App {
             em.close();
             emf.close();
         }
+
+        // Employe emp = new Employe();
+        // emp.setNom("Hamon");
+        // emp.setPrenom("Clément");
+        // emp.setSalaire(10000);
+        // emp.setPoste("Formateur");
+
+        // Client2 c = new Client2();
+        // c.setNom("Jean");
+        // c.setPrenom("Paul");
+        // c.setEmail("jean.paul@email.fr");
+
+        // em.persist(c);
+        // em.persist(emp);
+
+        // ProduitPhysique pp = new ProduitPhysique();
+        // pp.setNom("Ballon");
+        // pp.setPoids(1);
+        // pp.setPrix(20);
+
+        // ProduitNumerique pn = new ProduitNumerique();
+        // pn.setNom("Dark Souls");
+        // pn.setPrix(10);
+        // pn.setTailleFichier(10);
+
+        // em.persist(pn);
+        // em.persist(pp);
+
+        // Article a = new Article();
+        // a.setTitre("Mon article");
+
+        // Commentaire com = new Commentaire();
+        // com.setContenu("contenuuuuuuuuuuuuuuuuu");
+
+        // em.persist(com);
+        // em.persist(a);
+
+        // Bus b = new Bus();
+        // b.setCapacite(300);
+        // b.setImmatriculation("11 AAA 11");
+        // em.persist(b);
+
+        // Trajet trajet = new Trajet();
+        // trajet.setDepart("Republique");
+        // trajet.setArrivee("Clemenceau");
+        // trajet.setVehicule(b);
+        // em.persist(trajet);
 
         // try {
         // Client client1 = new Client();

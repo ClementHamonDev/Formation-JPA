@@ -10,4 +10,12 @@ public class HeuresTravaillees {
     private EmployeProjetId id;
 
     private int nbHeures;
+
+    public int getNbHeures() {
+        return this.nbHeures;
+    }
+
+    public void setNbHeures(int nbHeures) {
+        this.nbHeures = nbHeures;
+    };
 }
